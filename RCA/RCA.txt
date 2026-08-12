@@ -1,0 +1,173 @@
+# Root Cause Analysis (RCA)
+ 
+Incident ID:
+CPU-FAULT-001
+ 
+Tower:
+Compute
+ 
+Incident Title:
+High CPU Utilization on Ubuntu Virtual Machine
+ 
+Date:
+12-Aug-2026
+ 
+Environment:
+Azure VM
+Resource Group: rg-aiinfra-Tushar
+VM Name: vm-lab-ubuntu
+ 
+--------------------------------------------------
+ 
+Incident Summary
+ 
+A controlled CPU utilization fault was intentionally introduced on an Ubuntu virtual machine as part of the AI-Assisted Infrastructure Workflow Capstone Project.
+ 
+The objective was to simulate a production-like performance degradation scenario, capture evidence, diagnose the issue using AI assistance, perform recovery actions, and validate service restoration.
+ 
+--------------------------------------------------
+ 
+Business Impact
+ 
+System responsiveness was degraded.
+ 
+CPU utilization reached 100%.
+ 
+Load average increased from the baseline level.
+ 
+The environment remained accessible for monitoring and analysis.
+ 
+--------------------------------------------------
+ 
+Detection
+ 
+The issue was identified using:
+ 
+top
+ 
+uptime
+ 
+vmstat 2 5
+ 
+Observed Symptoms:
+ 
+CPU Idle:
+0%
+ 
+CPU Usage:
+100%
+ 
+Load Average:
+2.16, 0.82, 0.35
+ 
+Multiple stress processes consumed available CPU resources.
+ 
+--------------------------------------------------
+ 
+Timeline
+ 
+10:15 UTC
+Baseline health verification completed.
+ 
+10:20 UTC
+Restore script tested successfully.
+ 
+10:25 UTC
+CPU fault injected using stress utility.
+ 
+10:28 UTC
+High CPU utilization detected.
+ 
+10:29 UTC
+Evidence collected.
+ 
+10:30 UTC
+Root cause identified.
+ 
+10:32 UTC
+Recovery executed using restore.sh.
+ 
+10:33 UTC
+CPU utilization returned to normal baseline.
+ 
+--------------------------------------------------
+ 
+Root Cause
+ 
+The stress utility was executed using:
+ 
+stress --cpu 8 --timeout 600
+ 
+This created multiple worker threads that continuously consumed processor resources.
+ 
+As a result:
+ 
+CPU idle reduced to 0%.
+ 
+CPU utilization increased to 100%.
+ 
+System load increased significantly.
+ 
+--------------------------------------------------
+ 
+Resolution
+ 
+Executed restore script:
+ 
+./restore.sh
+ 
+Actions performed:
+ 
+pkill stress
+ 
+Verified termination of stress processes.
+ 
+Collected post-recovery evidence.
+ 
+--------------------------------------------------
+ 
+Recovery Validation
+ 
+Validation Commands:
+ 
+ps -ef | grep stress
+ 
+uptime
+ 
+top
+ 
+vmstat 2 5
+ 
+Results:
+ 
+No active stress processes.
+ 
+CPU utilization reduced to baseline levels.
+ 
+System responsiveness restored.
+ 
+Load average decreased.
+ 
+--------------------------------------------------
+ 
+Preventive Recommendations
+ 
+1. Configure Azure Monitor CPU alerts.
+ 
+2. Implement proactive threshold monitoring.
+ 
+3. Create operational runbooks.
+ 
+4. Perform periodic capacity reviews.
+ 
+5. Implement automated incident detection.
+ 
+--------------------------------------------------
+ 
+Conclusion
+ 
+The controlled fault successfully simulated CPU resource exhaustion.
+ 
+Root cause identification, remediation, recovery validation, and documentation were completed successfully.
+ 
+The environment was restored without requiring a VM restart or service interruption.
