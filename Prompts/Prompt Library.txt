@@ -1,0 +1,63 @@
+Prompt Library - AI Application Across the Capstone 
+
+Project: Azure Ubuntu VM CPU Utilisation Fault Injection (Compute Tower) 
+
+Project Information 
+
+Resource Group: rg-aiinfra-Aryen
+VM: vm-lab-ubuntu 
+Platform: Azure Ubuntu VM 
+Scenario: CPU Resource Exhaustion 
+Fault Command Used: stress --cpu 8 --timeout 600 
+Recovery Method: restore.sh (pkill stress) 
+
+Prompt D1 - Initial Diagnosis 
+
+Prompt used to diagnose CPU saturation based on top, uptime and vmstat outputs. AI concluded that stress processes were consuming CPU resources leading to 100% CPU usage and 0% idle CPU. 
+ 
+Human Validation 
+Kept: Stress process as root cause. 
+Modified: Added ps verification command. 
+Rejected: VM reboot recommendation. 
+
+Prompt D2 - Root Cause Validation 
+
+AI validated CPU exhaustion using evidence: CPU Usage 100%, CPU Idle 0%, load average increased and stress processes visible. 
+ 
+Human Validation 
+Kept: All validation checks. 
+Modified: Added restore.sh verification. 
+Rejected: None. 
+
+Prompt R1 - Recovery Procedure 
+
+AI suggested identifying stress processes, stopping them and validating CPU recovery. 
+ 
+Human Validation 
+Kept: Entire recovery workflow. 
+Modified: Used restore.sh for remediation. 
+Rejected: None. 
+
+Prompt A1 - Restore Script Review 
+
+AI reviewed Linux restore script using pkill stress and suggested verification after execution. 
+ 
+Human Validation 
+Kept: Idempotent approach. 
+Modified: Added uptime, top and vmstat checks. 
+Rejected: Additional logging complexity. 
+
+Prompt Doc1 - RCA Structure 
+
+AI generated RCA structure containing Incident Summary, Timeline, Root Cause, Resolution, Recovery Validation and Preventive Actions. 
+ 
+Human Validation 
+Kept: Entire structure. 
+Modified: Added Azure environment details and AI validation section. 
+Rejected: Personal accountability section. 
+
+Human Validation Summary 
+
+Diagnosis: Accepted root cause and evidence correlation. 
+Automation: Kept restore logic and fault methodology. 
+Documentation: Used AI-generated structure while tailoring content to actual project evidence. 
